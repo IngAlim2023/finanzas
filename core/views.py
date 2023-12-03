@@ -12,7 +12,9 @@ from django.views.generic import CreateView
 from django.urls import reverse
 
 from core.forms import RegistrarForm
-
+#Para obener los gastos de los usuarios:
+from core.models import Registros
+from django.db.models import Sum
 #Vistas basadas en clases:
 from django.views.generic.base import TemplateView
 
@@ -55,6 +57,20 @@ class PerfilUsuario(DetailView):
         user_id = self.kwargs.get('user_id')
         # Cambiar 'user_id' a 'pk' para que coincida con la URL
         return User.objects.filter(pk=user_id).first()
+   
+    #metodo para encontrar el 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        usuario = self.get_object()
+
+        # Filtrar registros por el usuario y por movimiento de tipo Ingreso
+        ingresos = Registros.objects.filter(user=usuario, movimiento__tipo_movimiento='Ingresos')
+
+        # Calcular la suma del monto para los ingresos
+        monto_total_ingresos = ingresos.aggregate(Sum('monto'))['monto__sum']
+
+        context['monto_total_ingresos'] = monto_total_ingresos
+        return context
 
 @method_decorator(login_required, name='dispatch')
 class RegistrarView(CreateView):

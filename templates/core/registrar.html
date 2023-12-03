@@ -10,10 +10,34 @@
             {% csrf_token %}
             <h1 class="title">Movimientos</h1>
             <label>
-                <ion-icon name="person-outline"></ion-icon>
-                {{ form.as_p }}
+                <ion-icon name="card-outline"></ion-icon>
+                {{ form.movimiento.label }}
+                {{ form.movimiento }}
             </label>
             
+            <label>
+                <ion-icon name="cash-outline"></ion-icon>
+                {{ form.motivos.label }}
+                {{ form.motivos }}
+            </label>
+
+            <label>
+                <ion-icon name="document-text-outline"></ion-icon>
+                {{form.descripcion.label}}
+                {{ form.descripcion }}
+            </label>
+
+            <label>
+                <ion-icon name="wallet-outline"></ion-icon>
+                {{ form.monto.label}}
+                {{ form.monto }}
+            </label>
+
+            <label>
+                <ion-icon name="calendar-outline"></ion-icon>
+                {{ form.fecha.label }}
+                {{ form.fecha }}
+            </label>
             <button type="submit" id="button">Registrar</button>
         </form>
     </div>
