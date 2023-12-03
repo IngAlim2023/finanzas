@@ -1,0 +1,29 @@
+{% extends 'core/base.html' %}
+{% block titulo %} inicio {% endblock %}
+{% load static %}
+{% block estilo %}
+<link rel="stylesheet" href="{% static 'css/stylelogin.css' %}">
+{% endblock %}
+{% block contenido %}
+    <div class="login">
+        <form method="POST" action="{% url 'tu_vista_login' %}">
+            {% csrf_token %}
+            <h1 class="title">Ingresar</h1>
+            {% if error_message %}
+            <div class="error-message">{{ error_message }}</div>
+            {% endif %}
+            <label>
+                <ion-icon name="person-outline"></ion-icon>
+                <input type="text" name= "username" id="username" placeholder="Correo" required>
+            </label>
+            <label>
+                <ion-icon name="key-outline"></ion-icon>
+                <input type="password" name="password" id="password" placeholder="Contraseña" required>
+            </label>
+            <a href="{% url 'registro' %}" class="link">Registrame</a>
+            <button type="submit" id="button">Ingresar</button>
+        </form>
+    </div>    
+{% endblock %}
+
+<script src="{% static 'js/login.js' %}"></script>

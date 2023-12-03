@@ -1,0 +1,22 @@
+{% extends 'core/base.html' %}
+{% block titulo %} inicio {% endblock %}
+{% load static %}
+{% block estilo %}
+<link rel="stylesheet" href="{% static 'css/stylelogin.css' %}">
+{% endblock %}
+{% block contenido %}
+    <div class="login">
+        <form method="post">
+            {% csrf_token %}
+            <h1 class="title">Movimientos</h1>
+            <label>
+                <ion-icon name="person-outline"></ion-icon>
+                {{ form.as_p }}
+            </label>
+            
+            <button type="submit" id="button">Registrar</button>
+        </form>
+    </div>
+    
+{% endblock %}
+<script src="{% static 'js/login.js' %}"></script> 

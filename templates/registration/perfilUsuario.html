@@ -1,0 +1,39 @@
+{% extends 'core/base.html' %}
+{% block titulo %} Perfil {% endblock %}
+{% load static %}
+
+{% block estilo %}
+    <link rel="stylesheet" href="{% static 'css/styleperfil.css' %}">
+{% endblock %}
+
+{% block contenido %}
+    <div class="contenedor">
+         <!-- ======= Perfil ======= -->
+        <div class="perfil">
+            <div class="foto-nombre">
+            {% if request.user.photo %}
+                <img src="{{ request.user.photo.url }}" alt="">
+            {% else %}
+                <img src="{% static 'media/img/default.jpg' %}" alt="">
+            {% endif %}
+
+            {% if request.user.first_name %}
+                <h1> {{ user.first_name }} {{ user.last_name }}</h1>
+            {% else %}
+                <h1>{{ user.username }}</h1>
+            {% endif %}
+
+            <h3><a href="{% url 'datos' %}"><ion-icon name="settings-outline"></ion-icon> </a></h3>
+                <p><strong>Dirección:</strong> {{ usuario.address }}</p>
+                <p><strong>Telefon:</strong> {{ usuario.phone }}</p>
+                <p><strong>Fecha de nacimiento:</strong>{{ usuario.birthday }}</p>
+                <p><strong>email:</strong> {{ usuario.email }}</p>
+            </div>
+            <div class="datos">
+                <p>NONE</p>
+            </div>
+        </div>
+        <!-- Fin Perfil -->
+    </div>
+    
+{% endblock %}

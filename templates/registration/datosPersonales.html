@@ -1,0 +1,66 @@
+{% extends 'core/base.html' %}
+{% block titulo %} inicio {% endblock %}
+{% load static %}
+{% block estilo %}
+<link rel="stylesheet" href="{% static 'css/stylelogin.css' %}">
+{% endblock %}
+{% block contenido %}
+    <div class="login">
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <h1 class="title">Mis datos</h1>
+            <label>
+                <ion-icon name="person-outline"></ion-icon>
+                {{ form.username }}
+            </label>
+            <label>
+            {% if user.first_name %}
+                <p>Nombre guardado</p>
+            {% else %}
+                <ion-icon name="text-outline"></ion-icon>
+                <input type="text" name="first_name" class="form-control" maxlength="150" id="id_first_name" placeholder="Primer nombre">
+            {% endif %}
+            </label>
+            <label>
+                <ion-icon name="text-outline"></ion-icon>
+                <input type="text" name="last_name" class="form-control" maxlength="150" id="id_last_name" placeholder="Apellido">
+            </label>
+            {{ form.tipo_id.label }}
+            <label>
+                {{ form.tipo_id }}
+            </label>
+
+            <label>
+                <ion-icon name="keypad-outline"></ion-icon>
+                <input type="text" name="identification" class="form-control" maxlength="20" required="" id="id_identification" placeholder="Número de documento">
+            </label>
+            {% if user.photo %}
+            
+            {% else %}
+                <label>
+                    <ion-icon name="image-outline"></ion-icon>
+                    {{ form.photo }}
+                </label>
+            {% endif %}
+            {{ form.city.label }}
+            <label>
+                {{ form.city }}
+            </label>
+            <label>
+                <ion-icon name="earth-outline"></ion-icon>
+                <input type="text" name="address" class="form-control" maxlength="255" required="" id="id_address" placeholder="Dirección">
+            </label>
+            <label>
+                <ion-icon name="phone-portrait-outline"></ion-icon>
+                <input type="text" name="phone" class="form-control" maxlength="255" required="" id="id_phone" placeholder="Teléfono">
+            </label>
+            <label>
+                <ion-icon name="calendar-number-outline"></ion-icon>
+                {{ form.birthday }}
+            </label>
+            <button type="submit" id="button">Cargar datos</button>
+        </form>
+    </div>
+    <script src="{% static 'js/login.js' %}"></script>
+{% endblock %}
+

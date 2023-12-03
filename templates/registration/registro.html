@@ -1,0 +1,33 @@
+{% extends 'core/base.html' %}
+{% block titulo %} inicio {% endblock %}
+{% load static %}
+{% block estilo %}
+<link rel="stylesheet" href="{% static 'css/stylelogin.css' %}">
+{% endblock %}
+{% block contenido %}
+    <div class="login">
+        <form method="post">
+            {% csrf_token %}
+            <h1 class="title">Registrase</h1>
+            <label>
+                <ion-icon name="person-outline"></ion-icon>
+                {{ form.username }}
+            </label>
+            <label>
+                <ion-icon name="at-outline"></ion-icon>
+                {{ form.email }}
+            </label>
+            <label>
+                <ion-icon name="lock-closed-outline"></ion-icon>
+                {{ form.password1 }}
+            </label>
+            <label>
+                <ion-icon name="lock-closed-outline"></ion-icon>
+                {{ form.password2 }}
+            </label>
+            <button type="submit" id="button">Registrame</button>
+        </form>
+    </div>
+    
+{% endblock %}
+<script src="{% static 'js/login.js' %}"></script> 

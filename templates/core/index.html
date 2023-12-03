@@ -1,0 +1,102 @@
+{% extends 'core/base.html' %}
+{% block titulo %} Inicio {% endblock %}
+{% load static %}
+
+{% block estilo %}
+    <link rel="stylesheet" href="{% static 'css/styleindex.css' %}">
+{% endblock %}
+
+{% block contenido %}
+    <div class="contenedor">
+         <!-- ======= Bienvenida ======= -->
+        <div class="bienvenido">
+            <h2>Bienvenido</h2>
+            <p>Nuestra plataforma te ofrece un completo control sobre tus finanzas personales, 
+            brindándote las herramientas necesarias para una gestión óptima de tus gastos y ahorros. Con nosotros, 
+            podrás tomar decisiones financieras informadas, alcanzar tus objetivos de ahorro y disfrutar de una mayor 
+            estabilidad económica.</p>
+        </div>
+        
+         <!-- Fin Bienvenida -->
+         <!-- ======= Servicios ======= -->
+        <div class="servicios">
+            <h3>Nuestros Servicios</h3>
+            <div class="servi">
+                <div>
+                    <h4><a href="#" class="stretched-link">Servi Favor</a></h4>
+                    <p>Nos encargamos de tus gestiones, tramites empresariales, domicilios, diligencias y antojos personales</p>
+                    <ion-icon name="cart-outline"></ion-icon>
+                </div>
+                <div>
+                    <h4><a href="#" class="stretched-link">Servi Mensajeria</a></h4>
+                    <p> Prestamos servicios de mensajería, recogemos y llevamos tus productos y documentos para tu empresa o negocio</p>
+                    <ion-icon name="mail-outline"></ion-icon>
+                </div>               
+                <div>
+                    <h4><a href="#" class="stretched-link">Servi Arrendamiento</a></h4>
+                    <p> Brindamos servicio de transporte, te llevamos a tu destino de manera segura, confiable, ágil y oportuna</p>
+                    <ion-icon name="git-pull-request-outline"></ion-icon>
+                </div>                
+                
+            </div>    
+        </div>
+        <!-- Fin Servicios -->
+        <!-- ======= Fundadores ======= -->
+        <div class="fundadores">
+            <h3>Fundadores</h3>
+            <div class="cofundadores">
+                <div>
+                    <img src="{% static 'img/fundadores/jorge.jpg' %}">
+                    <h4>Jorge Porras</h4>
+                    <h5>Ceo &amp; Founder</h5>
+                    <p>"La vida es efímera, has lo que te apasiona y disfrútala."</p>
+                </div>
+                <div>
+                    <img src="{% static 'img/fundadores/juliana.jpg' %}">
+                    <h4>Juliana Chepe</h4>
+                    <h5>Manager &amp; Co-Founder</h5>
+                    <p>"NONE"</p>
+                </div>
+            </div>
+        </div>
+        <!-- Fin Fundadores -->
+        <!-- ======= Aliados ======= -->
+        
+        <div class="aliados">
+            <h3>Aliados</h3>
+            <div class="alianzas">
+                <p> IPS Experta </p>
+                <p> los perritos </p>
+            </div>
+        </div>
+        <!-- Fin Aliados -->
+
+        <!-- ======= Preguntas frecuentes ======= -->
+        <div class="preguntas">
+            <h3>Preguntas frecuentes</h3>
+            <div class="lista">
+                <h5>¿Dónde se encuentran ubicados y tienen cobertura? </h5>
+                <p>Nos encontramos ubicados en la ciudad de Medellín y tenemos cobertura en el área metropolitana de Medellín; aunque también
+                    realizamos algunos servicios en municipios cercanos. Próximamente estaremos en otras ciudades como Cali. </p>
+                <h5>¿En qué horarios y con cuanta antelación debo pedir mis servicios?</h5>
+                <p>Prestamos servicios las 24 horas de los 7 días de la semana y puedes solicitar cualquier servicio en cualquier momento,
+                    sin embargo, recomendamos programar sus envíos con anterioridad para mayor agilidad en el servicio.</p>
+                <h5>¿Existen descuentos o promociones para nuestros servicios?</h5>
+                <p>Claro que sí, aplican dependiendo de la frecuencia y el volumen de servicios que contrate con nosotros,
+                    accede a la pestaña detalles de servicios o contáctanos directamente, para más información.</p>
+                <h5>¿Cómo puedo realizar mis quejas, reclamos o devoluciones?</h5>
+                <p>Contamos con atención directa de servicio al cliente, comunícate con nosotros a través de la página o los
+                    enlaces de WhatsApp que allí aparecen, solucionamos inconvenientes directos y gestionamos soluciones con terceros.</p>
+                <h5>¿Cómo puedo trabajar con goService?</h5>
+                <p>Puedes registrarte con nosotros dando click <a href="#" style="color:blue; text-decoration: underline;">aquí</a> posteriormente nos contactaremos
+                    contigo para validar la información suministrada.</p>
+                <h5>¿Qué formas o método de pagos tengo para pagar mis servicios?</h5>
+                <p>Contamos con trasferencia electrónica, pago en efectivo por servicio contra entrega o pago mensualidad 
+                    vencida si has contratado algunos de nuestros paquetes.</p>
+            </div>
+
+        </div>
+        <!-- Fin Preguntas frecuentes -->
+    </div>
+    
+{% endblock %}

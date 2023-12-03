@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block titulo %}{% endblock %}</title>
+    {% block estilo %}{% endblock %}
+    <link rel="stylesheet" href="{% static 'css/stylebase.css' %}">
+</head>
+<body>
+    <div class="menu">
+        <ion-icon name="menu-outline"></ion-icon>
+        <ion-icon name="close-outline"></ion-icon>
+    </div>
+
+    <div class="barra-lateral">
+        <div>
+            <div class="nombre-pagina">
+                <ion-icon id="cloud" name="navigate-outline"></ion-icon>
+                <span>goService</span>
+            </div>
+            <button class="boton" id="servicio">
+                <ion-icon name="add-outline"></ion-icon>
+                <span>Registros</span>
+            </button>
+        </div>
+
+        <nav class="navegacion">
+            <ul>
+                <li>
+                    <a id="inbox" href="{% url 'inicio' %}">
+                        <ion-icon name="home-outline"></ion-icon>
+                        <span>Inicio</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <ion-icon name="star-outline"></ion-icon>
+                        <span>Nosotros</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <ion-icon name="paper-plane-outline"></ion-icon>
+                        <span>Servicios</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <ion-icon name="document-text-outline"></ion-icon>
+                        <span>Precios</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <ion-icon name="people-outline"></ion-icon>
+                        <span>Contactanos</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <ion-icon name="alert-circle-outline"></ion-icon>
+                        <span>Cuentas</span>
+                    </a>
+                </li>
+                {% if user.is_authenticated %}
+                <li>
+                        
+                    <a href="{% url 'logout' %}">
+                        <ion-icon name="close-circle-outline"></ion-icon>
+                        <span>Cerrar sesión</span>
+                    </a>
+                </li>
+                {% else %}
+                    <li>
+                        
+                        <a href="{% url 'tu_vista_login' %}">
+                            <ion-icon name="person-outline"></ion-icon>
+                            <span>Ingresar</span>
+                        </a>
+                    </li>
+                {% endif %}
+            </ul>
+        </nav>
+
+        <div>
+            <div class="linea"></div>
+
+            <div class="modo-oscuro">
+                <div class="info">
+                    <ion-icon name="moon-outline"></ion-icon>
+                    <span>Oscuro</span>
+                </div>
+                <div class="switch">
+                    <div class="base">
+                        <div class="circulo">
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+    
+            <div class="usuario">
+                {% if user.is_authenticated %}
+                    {% if request.user.photo %}
+                        <img src="{{ request.user.photo.url }}" alt="">
+                    {% else %}
+                        <img src="{% static 'media/img/default.jpg' %}" alt="">
+                    {% endif %}
+                    <div class="info-usuario">
+                        <div class="nombre-email">
+                            <span class="nombre"><a href="{% url 'perfilUsuario' user_id=request.user.id %}">{{ user.username }}</a></span>
+                            <span class="email">{{ user.email }}</span>  
+                        </div>
+                    </div>
+                {% else %}
+                    
+                {% endif %}
+            </div>
+        </div>
+
+    </div>
+    <main>
+    {% block contenido %}
+    {% endblock %}
+
+    </main>
+    
+
+
+
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+    <script src="{% static 'js/base.js'  %}"></script>
+</body>
+</html>
