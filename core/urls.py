@@ -7,7 +7,7 @@ from django.contrib.auth import views as auth_views
 urlpatterns = [
     path('', IndexPageView.as_view(), name= 'inicio'),
     path('registros/', RegistrarView.as_view(),  name= 'registrar'),
-    #path('precios/', Precios.as_view(),  name= 'precios'),
+    path('dashboard/', DashboardView.as_view(),  name= 'dashboard'),
     #path('servicios/', Servicios.as_view(),  name= 'servicios'),
     #path('contacto/', Contacto.as_view(),  name= 'contacto'),
     path('login/', TuVistaLogin.as_view(), name='tu_vista_login'),

@@ -18,7 +18,7 @@
         <div>
             <div class="nombre-pagina">
                 <ion-icon id="cloud" name="navigate-outline"></ion-icon>
-                <span>goService</span>
+                <span>MisFinanzas</span>
             </div>
             <button class="boton" id="servicio">
                 <ion-icon name="add-outline"></ion-icon>
@@ -35,33 +35,15 @@
                     </a>
                 </li>
                 <li>
-                    <a href="#">
+                    <a href="{% url 'dashboard' %}">
                         <ion-icon name="star-outline"></ion-icon>
-                        <span>Nosotros</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="#">
-                        <ion-icon name="paper-plane-outline"></ion-icon>
-                        <span>Servicios</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="#">
-                        <ion-icon name="document-text-outline"></ion-icon>
-                        <span>Precios</span>
+                        <span>Dashboard</span>
                     </a>
                 </li>
                 <li>
                     <a href="#">
                         <ion-icon name="people-outline"></ion-icon>
                         <span>Contactanos</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="#">
-                        <ion-icon name="alert-circle-outline"></ion-icon>
-                        <span>Cuentas</span>
                     </a>
                 </li>
                 {% if user.is_authenticated %}

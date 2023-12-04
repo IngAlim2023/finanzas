@@ -1,0 +1,45 @@
+{% extends 'core/base.html' %}
+{% block titulo %} Inicio {% endblock %}
+{% load static %}
+
+{% block estilo %}
+    <link rel="stylesheet" href="{% static 'css/styledashboard.css' %}">
+{% endblock %}
+
+{% block contenido %}
+    <div class="contenedor">
+         <!-- ======= Bienvenida ======= -->
+        <div class="bienvenido">
+            <h1>Dashboard</h1>
+        </div>
+        
+         <!-- Fin Bienvenida -->
+         <!-- ======= Servicios ======= -->
+        <div class="servicios">
+            <h3>Resumen de finanzas personales</h3>
+            <div class="servi">
+                <div>
+                    <h4><a href="#" class="stretched-link">Total ingresos</a></h4>
+                    <p> $ {{ monto_total_ingresos }}</p>
+                    <ion-icon name="trending-up-outline"></ion-icon>
+                </div>
+                <div>
+                    <h4><a href="#" class="stretched-link">Total Egresos</a></h4>
+                    <p> $ {{ monto_total_egresos }}</p>
+                    <ion-icon name="trending-down-outline"></ion-icon>
+                </div>               
+                <div>
+                    <h4><a href="#" class="stretched-link">Total Disponible</a></h4>
+                    <p> $ {{ monto_total_disponible }} </p>
+                    <ion-icon name="wallet-outline"></ion-icon>
+                </div>                
+                
+            </div>    
+        </div>
+        <!-- Fin Servicios -->
+       
+
+        
+    </div>
+    
+{% endblock %}

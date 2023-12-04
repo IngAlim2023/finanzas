@@ -12,7 +12,7 @@ from django.views.generic import CreateView
 from django.urls import reverse
 
 from core.forms import RegistrarForm
-#Para obener los gastos de los usuarios:
+#Para obener las finanzas de los usuarios:
 from core.models import Registros
 from django.db.models import Sum
 #Vistas basadas en clases:
@@ -90,3 +90,31 @@ class RegistrarView(CreateView):
             return redirect('inicio')  # Redirige a la vista de inicio después de un registro exitoso.
 
         return render(request, self.template_name, {'form': form})
+    
+@method_decorator(login_required, name='dispatch')
+class DashboardView(TemplateView):
+    template_name = 'core/dashboard.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        # Obtener el usuario actualmente autenticado
+        usuario = self.request.user
+
+        # Filtrar registros por el usuario y por movimiento de tipo Ingreso o Egreso
+        registros = Registros.objects.filter(user=usuario, movimiento__tipo_movimiento__in=['Ingresos', 'Egresos'])
+
+        # Calcular la suma del monto para los ingresos, egresos y disponible
+        monto_total_ingresos = registros.filter(movimiento__tipo_movimiento='Ingresos').aggregate(Sum('monto'))['monto__sum'] or 0
+        monto_total_egresos = registros.filter(movimiento__tipo_movimiento='Egresos').aggregate(Sum('monto'))['monto__sum'] or 0
+        monto_total_disponible = monto_total_ingresos - monto_total_egresos
+
+        context.update({
+            'monto_total_ingresos': monto_total_ingresos,
+            'monto_total_egresos': monto_total_egresos,
+            'monto_total_disponible': monto_total_disponible,
+        })
+
+        return context
+    
+    
