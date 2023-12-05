@@ -104,17 +104,27 @@ class DashboardView(TemplateView):
         # Filtrar registros por el usuario y por movimiento de tipo Ingreso o Egreso
         registros = Registros.objects.filter(user=usuario, movimiento__tipo_movimiento__in=['Ingresos', 'Egresos'])
 
+        # Reversar el orden de los registros para mostrar el último primero
+        
+
         # Calcular la suma del monto para los ingresos, egresos y disponible
         monto_total_ingresos = registros.filter(movimiento__tipo_movimiento='Ingresos').aggregate(Sum('monto'))['monto__sum'] or 0
         monto_total_egresos = registros.filter(movimiento__tipo_movimiento='Egresos').aggregate(Sum('monto'))['monto__sum'] or 0
         monto_total_disponible = monto_total_ingresos - monto_total_egresos
 
+        
+
         context.update({
             'monto_total_ingresos': monto_total_ingresos,
             'monto_total_egresos': monto_total_egresos,
             'monto_total_disponible': monto_total_disponible,
+            'registros' : registros[::-1],
         })
 
         return context
     
+def delete(request, registro_id):
+    registros = Registros.objects.filter(id=registro_id)
+    registros.delete()
+    return HttpResponseRedirect(reverse("inicio"))
     

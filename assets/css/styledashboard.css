@@ -55,42 +55,6 @@
     
 }
 
-.contenedor .fundadores {
-    margin-top: 15px;
-    border-radius: 10px;
-    padding: 20px;
-}
-.contenedor .fundadores h3{
-    text-align: center;
-    padding: 10px;
-    font-size: 25px;
-}
-.contenedor .fundadores .cofundadores{
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    justify-content: center;
-    align-items: center;
-}
-.contenedor .fundadores .cofundadores div{
-    text-align: center;
-    min-width: auto;
-    min-height: 250px;
-    background-color: aliceblue;
-    border: 0.5px solid rgba(0, 139, 139, 0.473);
-    border-radius: 10px;
-    margin: 15px;
-    box-shadow: 0 5px 10px;
-}
-.contenedor .fundadores .cofundadores img{
-    width: 80px;
-    height: 100px;
-    border-radius: 50%;
-    overflow: hidden;
-    margin: 0 auto;
-    margin-top: 15px;
-    object-fit: cover;
-    
-}
 .contenedor .aliados {
     margin-top: 15px;
     border-radius: 10px;
@@ -101,72 +65,43 @@
     padding: 10px;
     font-size: 25px;
 }
-.contenedor .aliados .alianzas {
-    text-align: center;
+.contenedor .aliados .dato {
     display: flex;
-    min-width: auto;
-    min-height: 250px;
-    background-color: aliceblue;
-    border: 0.5px solid rgba(0, 139, 139, 0.473);
-    border-radius: 10px;
-    margin: 15px;
-    box-shadow: 0 5px 10px;
-}
-.contenedor .aliados .alianzas p {
-    text-align: center;
-    cursor: pointer;
-    height: 55px;
-    border: 5px solid grey;
-    border-radius: 10px;
-    background-color: grey;
-    margin-top: 15px;
-    margin-left: 15px ;
-    padding: 15px;
-    font-style: italic;
-    color: aliceblue;
-}
-.contenedor .preguntas {
-    margin-top: 15px;
-    border-radius: 10px;
-    padding: 20px;
-}
-.contenedor .preguntas h3{
-    text-align: center;
-    padding: 10px;
-    font-size: 25px;
-}
-.contenedor .preguntas .lista {
-    min-width: auto;
-    min-height: 250px;
-    background-color: aliceblue;
-    border: 0.5px solid rgba(0, 139, 139, 0.473);
-    border-radius: 10px;
-    margin: 15px;
-    box-shadow: 0 5px 10px;
-}
-.contenedor .preguntas .lista h5{
+    flex-wrap: wrap; /* Permite que los elementos se distribuyan en múltiples líneas si no hay suficiente espacio */
+    margin: -5px; /* Compensa el margen agregado a los elementos hijos para que no afecte el ancho total */
     padding: 5px;
 }
-.contenedor .preguntas .lista p{
-    font-size: 12px;
-    padding: 10px;
-}
-.contenedor .preguntas .lista a {
-    color: white !important;
-    display: inline-block;
-    padding: 10px 20px;
+
+.contenedor .aliados .dato div {
+    flex: 0 0 auto; /* Deshabilita la capacidad de encogerse o crecer automáticamente */
+    max-width: 350px;
     text-align: center;
-    text-decoration: none !important;
-    background-color: rgb(3, 0, 0);
-    border: 1px solid black;
-    border-radius: 7px;
-    cursor: pointer;
-    transition: background-color 0.3s, color 0.3s, box-shadow 0.3s;
+    border: 0.5px solid rgba(0, 139, 139, 0.473);
+    background-color: aliceblue;
+    border-radius: 10px;
+    margin: 15px; /* Ajusta el margen según tu preferencia */
+    box-shadow: 0 5px 10px;
+    padding: 7px;
+}
+.contenedor .aliados .dato h5 span{
+    margin: 10px;
 }
 
-.contenedor .preguntas .lista a:hover {
-    background-color: white;
-    color: black !important;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    border: 1px solid white;
+.contenedor .aliados .dato .a1 {
+    border-radius: 10px;
+    margin-top:25px;
+    background-color: black;
+    color: white;
+    font-size: 12px;
+    padding: 2px;
+    text-decoration: none;
+}
+.contenedor .aliados .dato .a2 {
+    border-radius: 10px;
+    margin-top:25px;
+    background-color: black;
+    color: white;
+    font-size: 12px;
+    padding: 2px;
+    text-decoration: none;
 }

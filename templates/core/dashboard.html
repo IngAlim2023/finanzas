@@ -36,8 +36,35 @@
                 
             </div>    
         </div>
+
         <!-- Fin Servicios -->
-       
+        <!-- ======= Aliados ======= -->
+        
+        <div class="aliados">
+            <h3>Toda la base de datos</h3>
+            
+            <div class="dato">
+                {% for dato in registros %}
+                    <div>
+                        <h5>Monto del movimiento:</h5>
+                        <span> $ {{ dato.monto }}</span>
+                        <h5>Descripción del movimiento:</h5>
+                        <span>{{ dato.descripcion }}</span>
+                        <h5>Fecha del movimiento:</h5>
+                        <span>{{ dato.fecha|date:"d-m-Y" }}</span>
+                        <h5>Motivo del movimiento:</h5>
+                        <span>{{ dato.movimiento }}</span>
+                        <h5>Motivo del motivos:</h5>
+                        <span>{{ dato.motivos }}</span>
+                        <br>
+                        <a href="" class="a1">Actualizar</a>
+                        <a href="{% url 'delete' dato.id %}" class="a2">Eliminar</a>
+                    </div>                        
+                {% endfor %}    
+            </div>
+            
+        </div>
+        <!-- Fin Aliados -->
 
         
     </div>
