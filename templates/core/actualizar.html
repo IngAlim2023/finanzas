@@ -1,0 +1,87 @@
+{% extends 'core/base.html' %}
+{% block titulo %} inicio {% endblock %}
+{% load static %}
+{% block estilo %}
+<link rel="stylesheet" href="{% static 'css/stylelogin.css' %}">
+{% endblock %}
+{% block contenido %}
+    <div class="login">
+        <form method="post" action="{% url 'update_view' %}">
+            {% csrf_token %}
+            <h1 class="title">Actualizar</h1>
+            <label>
+                <ion-icon name="qr-code-outline"></ion-icon>
+    
+                <input type="text" id="id" name="id" class="form-control" value="{{ update.id }}" maxlength="20" required=""  readonly>
+            </label>
+
+            <label>
+                <ion-icon name="card-outline"></ion-icon>
+                <label> Movimiento </label>
+                <select name="movimiento" class="form-select" required="" id="id_movimiento">
+                    <option value="" selected="">---------</option>
+                  
+                    <option value="1">Ingresos</option>
+                  
+                    <option value="2">Egresos</option>
+                  
+                  </select>
+                
+            </label>
+            
+            <label>
+                <ion-icon name="cash-outline"></ion-icon>
+                <label >Motivos</label>
+                <select name="motivos" class="form-select" required="" id="id_motivos">
+                    <option value="" selected="">---------</option>
+                  
+                    <option value="1">Comida</option>
+                  
+                    <option value="2">Gasolina</option>
+                  
+                    <option value="3">Arriendo</option>
+                  
+                    <option value="4">Moto</option>
+                  
+                    <option value="5">Comida Rap</option>
+                  
+                    <option value="6">Celular</option>
+                  
+                    <option value="8">Sueldo</option>
+                  
+                    <option value="9">Alquiler</option>
+                  
+                    <option value="10">Inversión</option>
+                  
+                    <option value="11">Otro Ingre</option>
+                  
+                    <option value="12">Otro Egres</option>
+                  
+                  </select>
+            </label>
+
+            <label>
+                <ion-icon name="document-text-outline"></ion-icon>
+                {{form.descripcion.label}}
+                <input type="text" name="descripcion" class="form-control" value="{{ update.descripcion }}" maxlength="20" required="" id="id_descripcion">
+            </label>
+
+            <label>
+                <ion-icon name="wallet-outline"></ion-icon>
+                {{ form.monto.label}}
+                <input type="number" name="monto" class="form-control" value="{{ update.monto }}" step="0.01" required="" id="id_monto">
+            </label>
+
+            <label>
+                <ion-icon name="calendar-outline"></ion-icon>
+                {{ form.fecha.label }}
+                {% with formatted_date=update.fecha|date:"Y-m-d" %}
+                    <input type="date" name="fecha" class="form-control" id="id_fecha" value="{{ formatted_date }}">
+                {% endwith %}
+            </label>
+            <button type="submit" id="button">Guardar cambios</button>
+        </form>
+    </div>
+    
+{% endblock %}
+<script src="{% static 'js/login.js' %}"></script> 

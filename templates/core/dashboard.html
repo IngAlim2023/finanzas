@@ -41,7 +41,7 @@
         <!-- ======= Aliados ======= -->
         
         <div class="aliados">
-            <h3>Toda la base de datos</h3>
+            <h3>Mis movimientos</h3>
             
             <div class="dato">
                 {% for dato in registros %}
@@ -57,7 +57,7 @@
                         <h5>Motivo del motivos:</h5>
                         <span>{{ dato.motivos }}</span>
                         <br>
-                        <a href="" class="a1">Actualizar</a>
+                        <a href="{% url 'update' dato.id %}" class="a1">Actualizar</a>
                         <a href="{% url 'delete' dato.id %}" class="a2">Eliminar</a>
                     </div>                        
                 {% endfor %}    

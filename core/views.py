@@ -1,15 +1,17 @@
-from typing import Any
-from django import forms
+
 from django.shortcuts import render, redirect
+from django.shortcuts import get_object_or_404
 from django.contrib.auth.decorators import login_required
-from django.views.generic import DetailView, ListView
+from django.views.generic import DetailView
 from django.utils.decorators import method_decorator
 from registration.models import User
 from django.contrib.auth import authenticate, login
-from django.views import View
 from django.http import HttpResponseRedirect
 from django.views.generic import CreateView
 from django.urls import reverse
+
+#Modelos movimientos y motivos 
+from movimientos.models import Movimientos, Motivos
 
 from core.forms import RegistrarForm
 #Para obener las finanzas de los usuarios:
@@ -122,9 +124,52 @@ class DashboardView(TemplateView):
         })
 
         return context
-    
+
+@method_decorator(login_required, name='dispatch')    
 def delete(request, registro_id):
     registros = Registros.objects.filter(id=registro_id)
     registros.delete()
     return HttpResponseRedirect(reverse("inicio"))
+
+
+def update_view(request):
+    registro_id = request.POST["id"]
+    registro_movimiento_id = int(request.POST["movimiento"])
+    registro_motivos_id = int(request.POST["motivos"])
+    registro_descripcion = request.POST["descripcion"]
+    registro_monto = request.POST["monto"]
+    registro_fecha = request.POST["fecha"]
+
+    # Obtener la instancia de Movimientos
+    registro_movimiento = Movimientos.objects.get(pk=registro_movimiento_id)
+    registro_motivo = Motivos.objects.get(pk=registro_motivos_id)
+    # Actualizar el registro
+    registro = Registros.objects.get(pk=registro_id)
+
+
+    registro.movimiento = registro_movimiento
+    registro.motivo = registro_motivos_id
+    registro.descripcion = registro_descripcion
+    registro.monto = registro_monto
+    registro.fecha = registro_fecha
+    registro.save()
+
+    return HttpResponseRedirect(reverse('dashboard'))
+
+def update(request, registro_id):
     
+
+    registro = Registros.objects.all()
+    registro_unico = Registros.objects.get(pk=registro_id)
+    #form = RegistrarForm(request.POST, instance=registro_unico)
+    #Validación
+    print(registro_unico)
+    print(registro_unico.movimiento)
+
+    context = {
+       'registro': registro[::-1],
+       'update': registro_unico,
+       #'form': form,
+    }
+
+    return render(request, "core/actualizar.html", context)
