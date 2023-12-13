@@ -54,7 +54,10 @@
     margin: 15px;
     
 }
-
+.centered {
+    text-align: center !important;
+    vertical-align: middle !important;
+}
 .contenedor .aliados {
     margin-top: 15px;
     border-radius: 10px;

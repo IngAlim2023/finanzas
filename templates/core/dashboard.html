@@ -38,6 +38,39 @@
         </div>
 
         <!-- Fin Servicios -->
+
+        <!-- Incio Graficos-->
+        <div class="container mt-4">
+            <div class="row">
+                <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 mx-auto">
+                    <div class="table-responsive">
+                        <table id="datos" class="table">
+                            <caption> Mis datos </caption>
+                            <thead>
+                                <tr>
+                                    <th class="centered">#</th>
+                                    <th class="centered">Id</th>
+                                    <th class="centered"> Usuario </th>
+                                    <th class="centered"> Movimiento </th>
+                                    <th class="centered"> Motivos </th>
+                                    <th class="centered"> Descripción </th>
+                                    <th class="centered"> Monto </th>
+                                    <th class="centered"> Fecha </th>
+
+                                </tr>
+                            </thead>
+                            <tbody id="tableBody_datos">
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                
+            </div>
+           
+        </div>
+        <!--Fin Graficos-->
+        
         <!-- ======= Aliados ======= -->
         
         <div class="aliados">
@@ -68,5 +101,7 @@
 
         
     </div>
+
+    <script src="{% static 'js/dashboard.js' %}"></script>
     
 {% endblock %}

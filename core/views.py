@@ -1,4 +1,3 @@
-
 from django.shortcuts import render, redirect
 from django.shortcuts import get_object_or_404
 from django.contrib.auth.decorators import login_required
@@ -22,6 +21,8 @@ from django.views.generic.base import TemplateView
 
 # Create your views here.
 
+#Prueba Json
+from django.http.response import JsonResponse
 class IndexPageView(TemplateView):
     #Indicar que template usa esta vista
     template_name = 'core/index.html'
@@ -131,7 +132,7 @@ def delete(request, registro_id):
     registros.delete()
     return HttpResponseRedirect(reverse("inicio"))
 
-
+@login_required
 def update_view(request):
     registro_id = request.POST["id"]
     registro_movimiento_id = int(request.POST["movimiento"])
@@ -152,24 +153,49 @@ def update_view(request):
     registro.descripcion = registro_descripcion
     registro.monto = registro_monto
     registro.fecha = registro_fecha
-    registro.save()
+    
+    #validadión del usuario:
+    usuario_actual = request.user
+        # Obtener el registro desde la base de datos
+    registro_user = get_object_or_404(Registros, pk=registro_id)
+    
+    if registro_user.user != usuario_actual: 
+        return HttpResponseRedirect(reverse('inicio'))
+    else:
+        registro.save()
 
     return HttpResponseRedirect(reverse('dashboard'))
 
+@login_required
 def update(request, registro_id):
     
 
     registro = Registros.objects.all()
     registro_unico = Registros.objects.get(pk=registro_id)
-    #form = RegistrarForm(request.POST, instance=registro_unico)
-    #Validación
-    print(registro_unico)
-    print(registro_unico.movimiento)
+    
+    #Validación para la vista(proteccion de datos):
+    usuario_actual = request.user
+    registro_user = get_object_or_404(Registros, pk=registro_id)
+    
+    #print(registro_unico)
+    print(usuario_actual)
+    print(registro_user.user)
+    #print(registro_unico.movimiento)
+    
+    if registro_user.user != usuario_actual: 
+        return HttpResponseRedirect(reverse('inicio'))
+    else:
+        
+        context = {
+        'registro': registro[::-1],
+        'update': registro_unico,
+        }
 
-    context = {
-       'registro': registro[::-1],
-       'update': registro_unico,
-       #'form': form,
-    }
+        return render(request, "core/actualizar.html", context)
+    
+#Prueba Json
 
-    return render(request, "core/actualizar.html", context)
+def basedatos (request):
+    base_datos = list(Registros.objects.values())
+    data = {'base_datos': base_datos}
+    return JsonResponse(data)

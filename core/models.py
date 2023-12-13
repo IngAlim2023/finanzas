@@ -19,4 +19,4 @@ class Registros(models.Model):
         verbose_name_plural = "Registros"
 
     def __str__(self) -> str:
-        return self.descripcion
+        return f'{self.user} - {self.movimiento} - {self.motivos} - {self.monto}'

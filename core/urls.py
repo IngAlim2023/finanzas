@@ -14,4 +14,7 @@ urlpatterns = [
     path('login/', TuVistaLogin.as_view(), name='tu_vista_login'),
     path('perfilUsuario/<int:user_id>/', views.PerfilUsuario.as_view(), name='perfilUsuario'),
     path('logout/', auth_views.LogoutView.as_view(), name='logout'),
+
+    #Prueba Json:
+    path('datos/', views.basedatos, name = "basedatos")
 ]
