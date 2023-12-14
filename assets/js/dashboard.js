@@ -7,7 +7,7 @@ const dataTableOptions = {
         { orderable: false, targets: [1, 2] },
         { searchable: false, targets: [1, 2, 3, 4] }
     ],
-    pageLength: 4,
+    pageLength: 15,
     destroy: true
 
 };

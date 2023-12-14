@@ -194,8 +194,8 @@ def update(request, registro_id):
         return render(request, "core/actualizar.html", context)
     
 #Prueba Json
-
+@login_required
 def basedatos (request):
-    base_datos = list(Registros.objects.values())
+    base_datos = list(Registros.objects.filter(user = request.user).values())
     data = {'base_datos': base_datos}
     return JsonResponse(data)
