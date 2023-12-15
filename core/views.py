@@ -255,7 +255,9 @@ def get_chart(request):
                 'name': 'Ingresos',
                 'type': 'line',
                 'stack': 'Total',
-                'areaStyle': {},
+                'areaStyle': {
+                    'color': '#80fd04'
+                },
                 'emphasis': {
                     'focus': 'series'
                 },
@@ -312,10 +314,12 @@ def get_chart_dos(request):
         ],
         'series': [
             {
-                'name': 'Ingresos',
+                'name': 'Egresos',
                 'type': 'line',
                 'stack': 'Total',
-                'areaStyle': {},
+                'areaStyle': {
+                    'color': '#d32626'
+                },
                 'emphasis': {
                     'focus': 'series'
                 },
