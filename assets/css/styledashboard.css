@@ -54,6 +54,10 @@
     margin: 15px;
     
 }
+.chart{
+    width: 100%;
+    min-height: 400px;
+}
 .centered {
     text-align: center !important;
     vertical-align: middle !important;

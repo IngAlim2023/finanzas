@@ -23,6 +23,9 @@ from django.views.generic.base import TemplateView
 
 #Prueba Json
 from django.http.response import JsonResponse
+#Prueba grafico
+from datetime import datetime
+
 class IndexPageView(TemplateView):
     #Indicar que template usa esta vista
     template_name = 'core/index.html'
@@ -199,3 +202,126 @@ def basedatos (request):
     base_datos = list(Registros.objects.filter(user = request.user).values())
     data = {'base_datos': base_datos}
     return JsonResponse(data)
+
+#Test Table:
+
+
+def get_chart(request):
+    ingresos = list(Registros.objects.filter(user=request.user, movimiento__tipo_movimiento='Ingresos').values_list('monto', flat=True))
+   # egresos = list(Registros.objects.filter(user=request.user, movimiento__tipo_movimiento='Egresos').values_list('monto', flat=True))
+    fechas = list(Registros.objects.filter(user=request.user, movimiento__tipo_movimiento='Ingresos').values_list('fecha', flat=True))
+    fechas_formateadas = [fecha.strftime("%y-%m") if fecha else None for fecha in fechas]
+    chart = {
+        'title': {
+            'text': "Ingresos"
+        },
+        'tooltip': {
+            'trigger': 'axis',
+            'axisPointer':{
+                'type': 'cross',
+                'label':{
+                    'backgroundColor': '#6a7985'
+                }
+            },
+        },
+        'legend': {
+            'data': ['Ingresos']
+        },
+        'toolbox': {
+            'feature': {
+                'saveAsImage': {}
+            }
+        },
+        'grid': {
+            'left': '3%',
+            'right': '4%',
+            'bottom': '3%',
+            'containLabel': True
+        },
+        'xAxis': [
+            {
+                'type': 'category',
+                'boundaryGap': False,
+                'data': fechas_formateadas
+            }
+        ],
+        'yAxis': [
+            {
+                'type': 'value'
+            }
+        ],
+        'series': [
+            {
+                'name': 'Ingresos',
+                'type': 'line',
+                'stack': 'Total',
+                'areaStyle': {},
+                'emphasis': {
+                    'focus': 'series'
+                },
+                'data': ingresos,
+            },
+        ],
+    }
+
+    return JsonResponse(chart)
+
+def get_chart_dos(request):
+    egresos = list(Registros.objects.filter(user=request.user, movimiento__tipo_movimiento='Egresos').values_list('monto', flat=True))
+   # egresos = list(Registros.objects.filter(user=request.user, movimiento__tipo_movimiento='Egresos').values_list('monto', flat=True))
+    fechas = list(Registros.objects.filter(user=request.user, movimiento__tipo_movimiento='Egresos').values_list('fecha', flat=True))
+    fechas_formateadas = [fecha.strftime("%y-%m") if fecha else None for fecha in fechas]
+    chart = {
+        'title': {
+            'text': "Egresos"
+        },
+        'tooltip': {
+            'trigger': 'axis',
+            'axisPointer':{
+                'type': 'cross',
+                'label':{
+                    'backgroundColor': '#6a7985'
+                }
+            },
+        },
+        'legend': {
+            'data': ['Ingresos']
+        },
+        'toolbox': {
+            'feature': {
+                'saveAsImage': {}
+            }
+        },
+        'grid': {
+            'left': '3%',
+            'right': '4%',
+            'bottom': '3%',
+            'containLabel': True
+        },
+        'xAxis': [
+            {
+                'type': 'category',
+                'boundaryGap': False,
+                'data': fechas_formateadas
+            }
+        ],
+        'yAxis': [
+            {
+                'type': 'value'
+            }
+        ],
+        'series': [
+            {
+                'name': 'Ingresos',
+                'type': 'line',
+                'stack': 'Total',
+                'areaStyle': {},
+                'emphasis': {
+                    'focus': 'series'
+                },
+                'data': egresos,
+            },
+        ],
+    }
+
+    return JsonResponse(chart)

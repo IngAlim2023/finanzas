@@ -16,5 +16,11 @@ urlpatterns = [
     path('logout/', auth_views.LogoutView.as_view(), name='logout'),
 
     #Prueba Json:
-    path('datos/', views.basedatos, name = "basedatos")
+    path('datos/', views.basedatos, name = "basedatos"),
+
+    #test Table
+
+    path('get_chart/', views.get_chart, name = "get_chart"),
+    path('get_chart_dos/', views.get_chart_dos, name = "get_chart_dos"),
+
 ]

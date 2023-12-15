@@ -51,3 +51,41 @@ const listaBase = async () => {
 window.addEventListener('load', async()=>{
     await initDataTable();
 });
+
+const getOptionChart = async () => {
+    try {
+        const response = await fetch("http://127.0.0.1:8000/get_chart/");
+        return await response.json();
+    } catch (ex) {
+        alert(ex);
+    }
+};
+
+const initChart = async () => {
+    const myChart = echarts.init(document.getElementById("chart"));
+    myChart.setOption(await getOptionChart());
+    myChart.resize();
+};
+
+window.addEventListener("load", async () => {
+    await initChart();
+});
+
+const getOptionChartDos = async () => {
+    try {
+        const response = await fetch("http://127.0.0.1:8000/get_chart_dos/");
+        return await response.json();
+    } catch (ex) {
+        alert(ex);
+    }
+};
+
+const initChartDos = async () => {
+    const myChart = echarts.init(document.getElementById("chartdos"));
+    myChart.setOption(await getOptionChartDos());
+    myChart.resize();
+};
+
+window.addEventListener("load", async () => {
+    await initChartDos();
+});
