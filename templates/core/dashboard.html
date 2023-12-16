@@ -38,10 +38,10 @@
         </div>
 
         <!-- Fin Servicios -->
-
         <!-- Incio Tabla-->
         <div class="continer">
-            <div class="row my-4">
+            <h2>Graficos</h2>
+            <div class="row">
                 <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6 mx-auto">
                     <div class="chart" id="chart"></div>
                     <div class="chart" id="chartdos"></div>
@@ -52,6 +52,7 @@
 
         <!-- Incio Tabla-->
         <div class="container mt-4">
+            <h2>Busqueda de datos</h2>
             <div class="row">
                 <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 mx-auto">
                     <div class="table-responsive">
@@ -81,35 +82,42 @@
            
         </div>
         <!--Fin Tabla-->
-        
-        <!-- ======= Aliados ======= -->
-        
-        <div class="aliados">
-            <h3>Editar mis movimientos</h3>
-            
-            <div class="dato">
-                {% for dato in registros %}
-                    <div>
-                        <h5>Monto del movimiento:</h5>
-                        <span> $ {{ dato.monto }}</span>
-                        <h5>Descripción del movimiento:</h5>
-                        <span>{{ dato.descripcion }}</span>
-                        <h5>Fecha del movimiento:</h5>
-                        <span>{{ dato.fecha|date:"d-m-Y" }}</span>
-                        <h5>Motivo del movimiento:</h5>
-                        <span>{{ dato.movimiento }}</span>
-                        <h5>Motivo del motivos:</h5>
-                        <span>{{ dato.motivos }}</span>
-                        <br>
-                        <a href="{% url 'update' dato.id %}" class="a1">Actualizar</a>
-                        <a href="{% url 'delete' dato.id %}" class="a2">Eliminar</a>
-                    </div>                        
-                {% endfor %}    
-            </div>
-            
+    
+        <!-- Test tabla Btrap -->
+        <div class="container">
+            <h2>Actualización y elimincación de datos</h2>
+            <div class="table-responsive">
+                <table class="table">
+                    <thead class="thead-light">
+                        <tr>
+                        <th scope="col">Id</th>
+                        <th scope="col">Monto</th>
+                        <th scope="col">Descripción</th>
+                        <th scope="col">Fecha</th>
+                        <th scope="col">Movimiento</th>
+                        <th scope="col">Motivo</th>
+                        <th scope="col">Actualizar</th>
+                        <th scope="col">Eliminar</th>
+                        </tr>
+                    </thead>
+                    {% for dato in registros %}
+                        <tbody>
+                            <tr>
+                            <th scope="row">{{ dato.id }}</th>
+                            <td>$ {{ dato.monto }}</td>
+                            <td>{{ dato.descripcion }}</td>
+                            <td>{{ dato.fecha|date:"d-m-Y" }}</td>
+                            <td>{{ dato.movimiento }}</td>
+                            <td>{{ dato.motivos }}</td>
+                            <td><a class="btn btn-dark" href="{% url 'update' dato.id %}" role="button">Actualizar</a></td>
+                            <td><a class="btn btn-dark" href="{% url 'delete' dato.id %}" role="button">Eliminar</a></td>
+                            </tr>
+                        </tbody>
+                    {% endfor %}    
+                </table>
         </div>
-        <!-- Fin Aliados -->
-
+        </div>
+        <!-- Fin Test -->
         
     </div>
 

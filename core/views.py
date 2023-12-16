@@ -93,7 +93,7 @@ class RegistrarView(CreateView):
             registro = form.save(commit=False)
             registro.user = self.request.user  # Asigna el usuario actual al registro
             registro.save()
-            return redirect('inicio')  # Redirige a la vista de inicio después de un registro exitoso.
+            return redirect('registrar')  # Redirige a la vista de inicio después de un registro exitoso.
 
         return render(request, self.template_name, {'form': form})
     
@@ -287,7 +287,7 @@ def get_chart_dos(request):
             },
         },
         'legend': {
-            'data': ['Ingresos']
+            'data': ['Egresos']
         },
         'toolbox': {
             'feature': {
