@@ -26,6 +26,7 @@ from django.http.response import JsonResponse
 #Prueba grafico
 from datetime import datetime
 
+
 class IndexPageView(TemplateView):
     #Indicar que template usa esta vista
     template_name = 'core/index.html'
@@ -106,7 +107,8 @@ class DashboardView(TemplateView):
 
         # Obtener el usuario actualmente autenticado
         usuario = self.request.user
-
+        # La hora
+        now = datetime.now()
         # Filtrar registros por el usuario y por movimiento de tipo Ingreso o Egreso
         registros = Registros.objects.filter(user=usuario, movimiento__tipo_movimiento__in=['Ingresos', 'Egresos'])
 
@@ -117,23 +119,58 @@ class DashboardView(TemplateView):
         monto_total_ingresos = registros.filter(movimiento__tipo_movimiento='Ingresos').aggregate(Sum('monto'))['monto__sum'] or 0
         monto_total_egresos = registros.filter(movimiento__tipo_movimiento='Egresos').aggregate(Sum('monto'))['monto__sum'] or 0
         monto_total_disponible = monto_total_ingresos - monto_total_egresos
-
-        
-
-        context.update({
+        try:
+            porcentaje_ingresos = int((monto_total_ingresos/monto_total_ingresos)*100)
+            porcentaje_egresos = int((monto_total_egresos/monto_total_ingresos)*100)
+            porcentaje_disponible = int((monto_total_disponible/monto_total_ingresos)*100)
+            
+            context.update({
             'monto_total_ingresos': monto_total_ingresos,
             'monto_total_egresos': monto_total_egresos,
             'monto_total_disponible': monto_total_disponible,
             'registros' : registros[::-1],
-        })
+            'porcentaje_ingresos': porcentaje_ingresos,
+            'porcentaje_egresos': porcentaje_egresos,
+            'porcentaje_disponible': porcentaje_disponible,
+            'now': now
+            })
 
-        return context
+            return context
+        
+        except ZeroDivisionError:
+            print("División por cero detectada. Redirigiendo...")
+            
+            porcentaje_ingresos = 0
+            porcentaje_egresos = 0
+            porcentaje_disponible = 0
 
-@method_decorator(login_required, name='dispatch')    
+            context.update({
+            'monto_total_ingresos': monto_total_ingresos,
+            'monto_total_egresos': monto_total_egresos,
+            'monto_total_disponible': monto_total_disponible,
+            'registros' : registros[::-1],
+            'porcentaje_ingresos': porcentaje_ingresos,
+            'porcentaje_egresos': porcentaje_egresos,
+            'porcentaje_disponible': porcentaje_disponible,
+            'now': now
+            })
+
+            return context
+
+@login_required   
 def delete(request, registro_id):
-    registros = Registros.objects.filter(id=registro_id)
-    registros.delete()
-    return HttpResponseRedirect(reverse("inicio"))
+
+    #validadión del usuario:
+    usuario_actual = request.user
+        # Obtener el registro desde la base de datos
+    registro_user = get_object_or_404(Registros, pk=registro_id)
+
+    if registro_user.user != usuario_actual: 
+        return HttpResponseRedirect(reverse('inicio'))
+    else:
+        registros = Registros.objects.filter(id=registro_id)
+        registros.delete()
+    return HttpResponseRedirect(reverse("dashboard"))
 
 @login_required
 def update_view(request):
@@ -205,12 +242,12 @@ def basedatos (request):
 
 #Test Table:
 
-
+@login_required
 def get_chart(request):
     ingresos = list(Registros.objects.filter(user=request.user, movimiento__tipo_movimiento='Ingresos').values_list('monto', flat=True))
    # egresos = list(Registros.objects.filter(user=request.user, movimiento__tipo_movimiento='Egresos').values_list('monto', flat=True))
     fechas = list(Registros.objects.filter(user=request.user, movimiento__tipo_movimiento='Ingresos').values_list('fecha', flat=True))
-    fechas_formateadas = [fecha.strftime("%y-%m") if fecha else None for fecha in fechas]
+    fechas_formateadas = [fecha.strftime("%y-%m-%d") if fecha else None for fecha in fechas]
     chart = {
         'title': {
             'text': "Ingresos"
@@ -267,12 +304,12 @@ def get_chart(request):
     }
 
     return JsonResponse(chart)
-
+@login_required
 def get_chart_dos(request):
     egresos = list(Registros.objects.filter(user=request.user, movimiento__tipo_movimiento='Egresos').values_list('monto', flat=True))
    # egresos = list(Registros.objects.filter(user=request.user, movimiento__tipo_movimiento='Egresos').values_list('monto', flat=True))
     fechas = list(Registros.objects.filter(user=request.user, movimiento__tipo_movimiento='Egresos').values_list('fecha', flat=True))
-    fechas_formateadas = [fecha.strftime("%y-%m") if fecha else None for fecha in fechas]
+    fechas_formateadas = [fecha.strftime("%y-%m-%d") if fecha else None for fecha in fechas]
     chart = {
         'title': {
             'text': "Egresos"
@@ -327,5 +364,54 @@ def get_chart_dos(request):
             },
         ],
     }
+
+    return JsonResponse(chart)
+@login_required
+def get_chart_tres(request):
+    # Encontrar al usuario
+    usuario = request.user
+    # Filtrar registros por el usuario y por movimiento de tipo Ingreso o Egreso
+    registros = Registros.objects.filter(user=usuario, movimiento__tipo_movimiento__in=['Ingresos', 'Egresos'])
+
+    # Calcular la suma del monto para los ingresos, egresos y disponible
+    monto_total_ingresos = registros.filter(movimiento__tipo_movimiento='Ingresos').aggregate(Sum('monto'))['monto__sum'] or 0
+    monto_total_egresos = registros.filter(movimiento__tipo_movimiento='Egresos').aggregate(Sum('monto'))['monto__sum'] or 0
+    monto_total_disponible = monto_total_ingresos - monto_total_egresos
+
+    porcentaje_egresos = int((monto_total_egresos / monto_total_ingresos) * 100)
+    porcentaje_disponible = int((monto_total_disponible / monto_total_ingresos) * 100)
+
+    chart = {
+    'title': {
+        'text': 'Tus estadisticas',
+        'subtext': 'Egresos e Ingresos',
+        'left': 'center'
+    },
+    'tooltip': {
+        'trigger': 'item',
+    },
+    'legend': {
+        'orient': 'vertical',
+        'left': 'left'
+    },
+    'series': [
+        {
+            'type': 'pie',
+            'radius': '50%',
+            'data': [
+                {'value': porcentaje_disponible, 'name': '% Disponible', 'itemStyle': {'color': 'green'}},
+                {'value': porcentaje_egresos, 'name': '% Egresos', 'itemStyle': {'color': 'red'}},
+            ],
+        },
+    ],
+    'emphasis': {
+        'itemStyle': {
+            'shadowBlur': 10,
+            'shadowOffsetX': 0,
+            'shadowColor': 'rgba(0, 0, 0, 0.5)'
+        }
+    }
+}
+
 
     return JsonResponse(chart)

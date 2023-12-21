@@ -22,5 +22,5 @@ urlpatterns = [
 
     path('get_chart/', views.get_chart, name = "get_chart"),
     path('get_chart_dos/', views.get_chart_dos, name = "get_chart_dos"),
-
+    path('get_chart_tres/', views.get_chart_tres, name = "get_chart_tres"),
 ]

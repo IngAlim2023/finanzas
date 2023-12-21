@@ -5,40 +5,36 @@
 <link rel="stylesheet" href="{% static 'css/stylelogin.css' %}">
 {% endblock %}
 {% block contenido %}
-    <div class="login">
-        <form method="post" action="">
+    <div class="d-flex justify-content-center align-items-center">
+        <form method="post" action="" class="p-5 rounded-5">
             {% csrf_token %}
-            <h1 class="title">Movimientos</h1>
-            <label>
-                <ion-icon name="card-outline"></ion-icon>
-                {{ form.movimiento.label }}
+            <h1 class="text-center fs-1 fw-bold">Movimientos</h1>
+            <div class="input-group mb-3">
+                <span class="input-group-text" id="basic-addon3">{{ form.movimiento.label }}</span>
                 {{ form.movimiento }}
-            </label>
+            </div>
             
-            <label>
-                <ion-icon name="cash-outline"></ion-icon>
-                {{ form.motivos.label }}
+            <div class="input-group mb-3">
+                <span class="input-group-text" id="basic-addon1">{{ form.motivos.label }}</span>
                 {{ form.motivos }}
-            </label>
+            </div>
 
-            <label>
-                <ion-icon name="document-text-outline"></ion-icon>
-                {{form.descripcion.label}}
+            <div class="input-group mb-3 mt-3">
+                <span class="input-group-text" id="basic-addon1">{{ form.descripcion.label }}</span>
                 {{ form.descripcion }}
-            </label>
+            </div>
 
-            <label>
-                <ion-icon name="wallet-outline"></ion-icon>
-                {{ form.monto.label}}
+            <div class="input-group mb-3">
+                <span class="input-group-text" id="basic-addon1">{{ form.monto.label }}</span>
                 {{ form.monto }}
-            </label>
+            </div>
 
-            <label>
-                <ion-icon name="calendar-outline"></ion-icon>
-                {{ form.fecha.label }}
+            <div class="input-group mb-3">
+                <span class="input-group-text" id="basic-addon1">{{ form.fecha.label }}</span>
                 {{ form.fecha }}
-            </label>
-            <button type="submit" id="button">Registrar</button>
+            </div>
+
+            <button type="submit" id="button" class="btn btn-dark w-100 mt-3">Agregar movimiento</button>
         </form>
     </div>
     

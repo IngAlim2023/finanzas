@@ -5,19 +5,19 @@
 <link rel="stylesheet" href="{% static 'css/stylelogin.css' %}">
 {% endblock %}
 {% block contenido %}
-    <div class="login">
-        <form method="post" action="{% url 'update_view' %}">
+    <div class="d-flex justify-content-center align-items-center">
+        <form method="post" action="{% url 'update_view' %}" class="p-5 rounded-5">
             {% csrf_token %}
-            <h1 class="title">Actualizar</h1>
-            <label>
-                <ion-icon name="qr-code-outline"></ion-icon>
+            <h1 class="text-center fs-1 fw-bold">Actualizar</h1>
+            <div class="input-group mb-3">
+                <span class="input-group-text" id="basic-addon1"><ion-icon name="qr-code-outline"></ion-icon></span>
     
                 <input type="text" id="id" name="id" class="form-control" value="{{ update.id }}" maxlength="20" required=""  readonly>
-            </label>
+            </div>
 
-            <label>
-                <ion-icon name="card-outline"></ion-icon>
-                <label> Movimiento </label>
+            <div class="input-group mb-3">
+                <span class="input-group-text" id="basic-addon1"> <ion-icon name="card-outline"></ion-icon>Movimiento</span>
+               
                 <select name="movimiento" class="form-select" required="" id="id_movimiento">
                     <option value="" selected="">---------</option>
                   
@@ -27,11 +27,11 @@
                   
                   </select>
                 
-            </label>
+                </div>
             
-            <label>
-                <ion-icon name="cash-outline"></ion-icon>
-                <label >Motivos</label>
+            <div class="input-group mb-3">
+                <span class="input-group-text" id="basic-addon1"><ion-icon name="cash-outline"></ion-icon>Motivos</span>
+                
                 <select name="motivos" class="form-select" required="" id="id_motivos">
                     <option value="" selected="">---------</option>
                   
@@ -58,28 +58,29 @@
                     <option value="12">Otro Egres</option>
                   
                   </select>
-            </label>
+                </div>
 
-            <label>
-                <ion-icon name="document-text-outline"></ion-icon>
-                {{form.descripcion.label}}
+            <div class="input-group mb-3">
+                <span class="input-group-text" id="basic-addon1"><ion-icon name="document-text-outline"></ion-icon>
+                 Descripción</span>
                 <input type="text" name="descripcion" class="form-control" value="{{ update.descripcion }}" maxlength="20" required="" id="id_descripcion">
-            </label>
+            </div>
 
-            <label>
-                <ion-icon name="wallet-outline"></ion-icon>
-                {{ form.monto.label}}
+            <div class="input-group mb-3">
+                <span class="input-group-text" id="basic-addon1"><ion-icon name="wallet-outline"></ion-icon>
+                    Monto
+                </span>
                 <input type="number" name="monto" class="form-control" value="{{ update.monto }}" step="0.01" required="" id="id_monto">
-            </label>
+            </div>
 
-            <label>
-                <ion-icon name="calendar-outline"></ion-icon>
-                {{ form.fecha.label }}
+            <div class="input-group mb-3">
+                <span class="input-group-text" id="basic-addon1"><ion-icon name="calendar-outline"></ion-icon>Fecha</span>
+            
                 {% with formatted_date=update.fecha|date:"Y-m-d" %}
                     <input type="date" name="fecha" class="form-control" id="id_fecha" value="{{ formatted_date }}">
                 {% endwith %}
-            </label>
-            <button type="submit" id="button">Guardar cambios</button>
+            </div>
+            <button type="submit" id="button" class="btn btn-dark w-100 mt-3">Guardar cambios</button>
         </form>
     </div>
     

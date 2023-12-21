@@ -5,25 +5,32 @@
 <link rel="stylesheet" href="{% static 'css/stylelogin.css' %}">
 {% endblock %}
 {% block contenido %}
-    <div class="login">
-        <form method="POST" action="{% url 'tu_vista_login' %}">
+    <div class="d-flex justify-content-center align-items-center">
+        
+        <form method="POST" action="{% url 'tu_vista_login' %}" class="p-5 rounded-5">
+            <div class="d-flex justify-content-center">
+                <img src="{% static 'media/img/logo.jpg' %}" alt="logo" width="250px">
+            </div>
             {% csrf_token %}
-            <h1 class="title">Ingresar</h1>
+            <h5 class="text-center fs-1 fw-bold">Ingresar</h5>
             {% if error_message %}
             <div class="error-message">{{ error_message }}</div>
             {% endif %}
-            <label>
-                <ion-icon name="person-outline"></ion-icon>
-                <input type="text" name= "username" id="username" placeholder="Correo" required>
-            </label>
-            <label>
-                <ion-icon name="key-outline"></ion-icon>
-                <input type="password" name="password" id="password" placeholder="Contraseña" required>
-            </label>
-            <a href="{% url 'registro' %}" class="link">Registrame</a>
-            <button type="submit" id="button">Ingresar</button>
+            <div class="input-group mb-3">
+                    <span class="input-group-text" id="basic-addon1">@</span>
+                    <input class="form-control" type="text" name= "username" id="username" placeholder="Correo" required>
+            </div>
+            <div class="input-group mb-3">
+                <span class="input-group-text" id="basic-addon1">****</span>
+                <input class="form-control" type="password" name="password" id="password" placeholder="Contraseña" required>
+            </div>
+        
+            <button type="submit" id="button" class="btn btn-dark w-100 mt-3">Ingresar</button>
+            <div class="d-flex gap-1 justify-content-center mt-1">
+                <div>No tienes una cuenta?</div> 
+                <a href="{% url 'registro' %}" class="text-decoration-none text-dark fw-bold fst-italic">Registrame</a>
+            </div>
         </form>
     </div>    
 {% endblock %}
 
-<script src="{% static 'js/login.js' %}"></script>

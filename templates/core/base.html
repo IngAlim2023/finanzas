@@ -9,102 +9,104 @@
     {% block estilo %}{% endblock %}
     <!-- Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous"/>
+    <!--DataTables-->
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/dataTables.bootstrap5.min.css"/>
+    <!--Custom css-->
     <link rel="stylesheet" href="{% static 'css/stylebase.css' %}">
 </head>
 <body>
-    <div class="menu">
-        <ion-icon name="menu-outline"></ion-icon>
-        <ion-icon name="close-outline"></ion-icon>
-    </div>
-
-    <div class="barra-lateral">
-        <div>
-            <div class="nombre-pagina">
-                <ion-icon id="cloud" name="navigate-outline"></ion-icon>
-                <span>MisFinanzas</span>
-            </div>
-            <button class="boton" id="servicio">
-                <ion-icon name="add-outline"></ion-icon>
-                <span>Registros</span>
-            </button>
-        </div>
-
-        <nav class="navegacion">
-            <ul>
-                <li>
-                    <a id="inbox" href="{% url 'inicio' %}">
-                        <ion-icon name="home-outline"></ion-icon>
-                        <span>Inicio</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="{% url 'dashboard' %}">
-                        <ion-icon name="star-outline"></ion-icon>
-                        <span>Dashboard</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="#">
-                        <ion-icon name="people-outline"></ion-icon>
-                        <span>Contactanos</span>
-                    </a>
-                </li>
-                {% if user.is_authenticated %}
-                <li>
-                        
-                    <a href="{% url 'logout' %}">
-                        <ion-icon name="close-circle-outline"></ion-icon>
-                        <span>Cerrar sesión</span>
-                    </a>
-                </li>
+  <div>
+    <header class="p-3 mb-3 border-bottom">
+      <div class="container">
+        <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+          <a href="{% url 'inicio' %}" class="d-flex align-items-center mb-2 mb-lg-0 text-dark text-decoration-none">
+            <img src="{% static 'media/img/logo.jpg' %}" alt="log" class="bi me-2" width="40" height="32">
+          </a>
+  
+          <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+            <li><a href="{% url 'inicio' %}" class="nav-link px-2 link-dark">Inicio</a></li>
+            {% if user.is_authenticated %}
+              <li><a href="{% url 'dashboard' %}" class="nav-link px-2 link-dark">Dashboard</a></li>
+              <li><a href="{% url 'registrar' %}" class="nav-link px-2 link-dark">Registrar</a></li>
+              <li><a href="#" class="nav-link px-2 link-dark">Contactanos</a></li>
+            {% else %}
+              <li><a href="{% url 'tu_vista_login' %}" class="nav-link px-2 link-dark">Ingresar</a></li>            
+              <li><a href="{% url 'registro' %}" class="nav-link px-2 link-dark">Registrarme</a></li>
+            {% endif %}
+          </ul>
+  
+          {% if user.is_authenticated %}
+            <hr class="dropdown-divider">
+            <div class="d-flex dropdown text-end">
+              <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                {% if request.user.photo %}
+                    <img src="{{ request.user.photo.url }}" alt="mdo" width="32" height="32" class="rounded-circle">
                 {% else %}
-                    <li>
-                        
-                        <a href="{% url 'tu_vista_login' %}">
-                            <ion-icon name="person-outline"></ion-icon>
-                            <span>Ingresar</span>
-                        </a>
-                    </li>
+                    <img src="{% static 'media/img/default.jpg' %}" alt="mdo" width="32" height="32" class="rounded-circle">
                 {% endif %}
-            </ul>
-        </nav>
-
-        <div>
-            <div class="linea"></div>
-
-            <div class="modo-oscuro">
-                <div class="info">
-                    <ion-icon name="moon-outline"></ion-icon>
-                    <span>Oscuro</span>
-                </div>
-                <div class="switch">
-                    <div class="base">
-                        <div class="circulo">
-                            
-                        </div>
-                    </div>
-                </div>
+                {{ user.username }}
+              </a>
+              <ul class="dropdown-menu text-small">
+                <li><a class="dropdown-item" href="#">New project...</a></li>
+                <li><a class="dropdown-item" href="#">Settings</a></li>
+                <li><a class="dropdown-item" href="{% url 'perfilUsuario' user_id=request.user.id %}">Perfil</a></li>
+                <li><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item" href="{% url 'logout' %}">Cerrar sesión</a></li>
+              </ul>
             </div>
-    
-            <div class="usuario">
+          {% else %}
+
+          {% endif %}
+        </div>
+      </div>
+    </header>
+  </div>
+    <nav class="navbar navbar-expand-lg bg-light">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="{% url 'inicio' %}">
+            <img src="{% static 'media/img/logo.jpg' %}" alt="log" width="150px">
+          </a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="{% url 'dashboard' %}">Dashboard</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'registrar' %}">Registrar</a>
+              </li>
+              <li class="nav-item dropdown">
                 {% if user.is_authenticated %}
-                    {% if request.user.photo %}
-                        <img src="{{ request.user.photo.url }}" alt="">
-                    {% else %}
-                        <img src="{% static 'media/img/default.jpg' %}" alt="">
-                    {% endif %}
-                    <div class="info-usuario">
-                        <div class="nombre-email">
-                            <span class="nombre"><a href="{% url 'perfilUsuario' user_id=request.user.id %}">{{ user.username }}</a></span>
-                            <span class="email">{{ user.email }}</span>  
-                        </div>
-                    </div>
-                {% else %}
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        {{ user.username }}
+                    </a>
                     
+                {% else %}
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    Ingresar
+                    </a>
+
+
                 {% endif %}
-            </div>
+                <ul class="dropdown-menu">
+                    {% if user.is_authenticated %}
+                        <li><a class="dropdown-item" href="{% url 'perfilUsuario' user_id=request.user.id %}">Perfil</a></li>
+                        <li><a class="dropdown-item" href="{% url 'logout' %}">Cerrar Sesión</a></li>
+                    {% else %}
+                        <li><a class="dropdown-item" href="{% url 'tu_vista_login' %}">Iniciar Sesión</a></li>
+                        <li><a class="dropdown-item" href="#">Registrarme</a></li>
+                    {% endif %}
+                  <li><a class="dropdown-item" href="#">Another action</a></li>
+                  <li><hr class="dropdown-divider"></li>
+                  <li><a class="dropdown-item" href="#">Something else here</a></li>
+                </ul>
+              </li>
+            </ul>
+            
         </div>
+      </nav>
 
     </div>
     <main>
@@ -113,13 +115,12 @@
 
     </main>
     
-
-
+    <!-- Bootstrap-->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js" integrity="sha384-cuYeSxntonz0PPNlHhBs68uyIAVpIIOZZ5JqeqvYYIcEL727kskC66kF92t6Xl2V" crossorigin="anonymous"></script>
     <!--Apache ECharts-->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/echarts/5.4.3/echarts.min.js"></script>
-    <!-- Bootstrap-->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
-    <!--Jquery-->
+   <!--Jquery-->
     <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
     <!--DataTables-->
     <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>

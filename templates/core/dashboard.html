@@ -7,10 +7,12 @@
 {% endblock %}
 
 {% block contenido %}
-    <div class="contenedor">
+    <div class="container">
          <!-- ======= Bienvenida ======= -->
         <div class="bienvenido">
             <h1>Dashboard</h1>
+            <caption>{{ now }}</caption>
+            
         </div>
         
          <!-- Fin Bienvenida -->
@@ -21,16 +23,19 @@
                 <div>
                     <h4>Total ingresos</h4>
                     <p> $ {{ monto_total_ingresos }}</p>
+                    <p>{{ porcentaje_ingresos }} %</p>
                     <ion-icon name="trending-up-outline"></ion-icon>
                 </div>
                 <div>
                     <h4>Total Egresos</h4>
                     <p> $ {{ monto_total_egresos }}</p>
+                    <p>{{ porcentaje_egresos }} %</p>
                     <ion-icon name="trending-down-outline"></ion-icon>
                 </div>               
                 <div>
                     <h4>Total Disponible</h4>
                     <p> $ {{ monto_total_disponible }} </p>
+                    <p>{{ porcentaje_disponible }} %</p>
                     <ion-icon name="wallet-outline"></ion-icon>
                 </div>                
                 
@@ -38,21 +43,32 @@
         </div>
 
         <!-- Fin Servicios -->
-        <!-- Incio Tabla-->
-        <div class="continer">
+        <!-- Incio Graficos-->
+        <div class="container mt-4">
             <h2>Graficos</h2>
+        </div>
+        <div class="container mt-4">
+            
             <div class="row">
-                <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6 mx-auto">
+                <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
                     <div class="chart" id="chart"></div>
+                </div>
+                <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
                     <div class="chart" id="chartdos"></div>
+                </div>
+                <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                    <div class="chart" id="charttres"></div>
                 </div>
             </div>
         </div>
-        <!-- Fin Tabla-->
+        <!-- Fin Graficos-->
 
         <!-- Incio Tabla-->
         <div class="container mt-4">
             <h2>Busqueda de datos</h2>
+        </div>
+        
+        <div class="container mt-4">
             <div class="row">
                 <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 mx-auto">
                     <div class="table-responsive">
@@ -62,13 +78,11 @@
                                 <tr>
                                     <th class="centered">#</th>
                                     <th class="centered">Id</th>
-                                    <th class="centered"> Usuario </th>
-                                    <th class="centered"> Movimiento </th>
-                                    <th class="centered"> Motivos </th>
                                     <th class="centered"> Descripción </th>
                                     <th class="centered"> Monto </th>
                                     <th class="centered"> Fecha </th>
-
+                                    <th class="centered"> Editado </th>
+                                    <th class="centered"> Creado </th>
                                 </tr>
                             </thead>
                             <tbody id="tableBody_datos">
@@ -84,37 +98,44 @@
         <!--Fin Tabla-->
     
         <!-- Test tabla Btrap -->
-        <div class="container">
+        <div class="container mt-4">
             <h2>Actualización y elimincación de datos</h2>
-            <div class="table-responsive">
-                <table class="table">
-                    <thead class="thead-light">
-                        <tr>
-                        <th scope="col">Id</th>
-                        <th scope="col">Monto</th>
-                        <th scope="col">Descripción</th>
-                        <th scope="col">Fecha</th>
-                        <th scope="col">Movimiento</th>
-                        <th scope="col">Motivo</th>
-                        <th scope="col">Actualizar</th>
-                        <th scope="col">Eliminar</th>
-                        </tr>
-                    </thead>
-                    {% for dato in registros %}
-                        <tbody>
+        </div>
+        <div class="container mt-4">
+            
+            <div class="row">
+                <div class="col">
+                    <table class="table table-hover">
+                        <thead class="thead-light">
                             <tr>
-                            <th scope="row">{{ dato.id }}</th>
-                            <td>$ {{ dato.monto }}</td>
-                            <td>{{ dato.descripcion }}</td>
-                            <td>{{ dato.fecha|date:"d-m-Y" }}</td>
-                            <td>{{ dato.movimiento }}</td>
-                            <td>{{ dato.motivos }}</td>
-                            <td><a class="btn btn-dark" href="{% url 'update' dato.id %}" role="button">Actualizar</a></td>
-                            <td><a class="btn btn-dark" href="{% url 'delete' dato.id %}" role="button">Eliminar</a></td>
+                            <th scope="col">Id</th>
+                            <th scope="col">Monto</th>
+                            <th scope="col">Descripción</th>
+                            <th scope="col">Fecha</th>
+                            <th scope="col">Movimiento</th>
+                            <th scope="col">Motivo</th>
+                            <th scope="col">Opciones</th>
                             </tr>
-                        </tbody>
-                    {% endfor %}    
-                </table>
+                        </thead>
+                        {% for dato in registros %}
+                            <tbody>
+                                <tr>
+                                <th scope="row">{{ dato.id }}</th>
+                                <td>$ {{ dato.monto }}</td>
+                                <td>{{ dato.descripcion }}</td>
+                                <td>{{ dato.fecha|date:"d-m-Y" }}</td>
+                                <td>{{ dato.movimiento }}</td>
+                                <td>{{ dato.motivos }}</td>
+                                <td>
+                                    <a class="btn btn-dark" href="{% url 'update' dato.id %}" role="button"><ion-icon name="pencil-outline"></ion-icon></a>
+                                    <a class="btn btn-dark" href="{% url 'delete' dato.id %}" role="button"><ion-icon name="trash-outline"></ion-icon></a>
+                                </td>
+                                </tr>
+                            </tbody>
+                        {% endfor %}    
+                    </table>
+                </div>
+                
         </div>
         </div>
         <!-- Fin Test -->

@@ -5,27 +5,28 @@
 <link rel="stylesheet" href="{% static 'css/stylelogin.css' %}">
 {% endblock %}
 {% block contenido %}
-    <div class="login">
-        <form method="post">
+    <div class="d-flex justify-content-center align-items-center">
+        <form method="post" class="p-5 rounded-5">
             {% csrf_token %}
-            <h1 class="title">Registrase</h1>
-            <label>
-                <ion-icon name="person-outline"></ion-icon>
+            <h1 class="text-center fs-1 fw-bold">Bienvenido</h1>
+            <div class="input-group mb-3">
                 {{ form.username }}
-            </label>
-            <label>
-                <ion-icon name="at-outline"></ion-icon>
+            </div>
+            
+            <div class="input-group mb-3">
+                
                 {{ form.email }}
-            </label>
-            <label>
-                <ion-icon name="lock-closed-outline"></ion-icon>
+            </div>
+            
+            <div class="input-group mb-3">
+                
                 {{ form.password1 }}
-            </label>
-            <label>
-                <ion-icon name="lock-closed-outline"></ion-icon>
+            </div>
+            <div class="input-group mb-3">
+                
                 {{ form.password2 }}
-            </label>
-            <button type="submit" id="button">Registrame</button>
+            </div>
+            <button type="submit" id="button" class="btn btn-dark w-100 mt-3">Registrame</button>
         </form>
     </div>
     
