@@ -7,33 +7,42 @@
 {% endblock %}
 
 {% block contenido %}
-    <div class="contenedor">
-         <!-- ======= Perfil ======= -->
-        <div class="perfil">
-            <div class="foto-nombre">
-            {% if request.user.photo %}
-                <img src="{{ request.user.photo.url }}" alt="">
-            {% else %}
-                <img src="{% static 'media/img/default.jpg' %}" alt="">
-            {% endif %}
-
-            {% if request.user.first_name %}
-                <h1> {{ user.first_name }} {{ user.last_name }}</h1>
-            {% else %}
-                <h1>{{ user.username }}</h1>
-            {% endif %}
-
-            <h3><a href="{% url 'datos' %}"><ion-icon name="settings-outline"></ion-icon> </a></h3>
-                <p><strong>Dirección:</strong> {{ usuario.address }}</p>
-                <p><strong>Telefon:</strong> {{ usuario.phone }}</p>
-                <p><strong>Fecha de nacimiento:</strong>{{ usuario.birthday }}</p>
-                <p><strong>email:</strong> {{ usuario.email }}</p>
-            </div>
-            <div class="datos">
-                <p>{{ monto_total_ingresos }}</p>
+<!-- ======= Perfil ======= -->
+    <div class="container mt-4 mb-4 p-3 d-flex justify-content-center">
+        <div class="card p-4">
+            <div class=" image d-flex flex-column justify-content-center align-items-center">
+                <button class="btn">
+                    {% if request.user.photo %}
+                        <img src="{{ request.user.photo.url }}" alt=""  height="100" width="100" />
+                    {% else %}
+                        <img src="{% static 'media/img/default.jpg' %}" alt=""  height="100" width="100" " />
+                    {% endif %}
+                </button>
+                {% if request.user.last_name %}
+                    <span class="name mt-3">{{ user.first_name }} {{ user.last_name }}</span>
+                {% else %}
+                    <span class="name mt-3"> {{ user.username }} </span>
+                {% endif %}
+                <span class="idd">{{ usuario.email }}</span>
+                <div class="d-flex flex-row justify-content-center align-items-center gap-2">
+                    
+                </div>
+                <div class="d-flex flex-row justify-content-center align-items-center mt-3"> 
+                    <span class="number">1069 <span class="follow">Followers</span></span> 
+                </div>
+                <div class=" d-flex mt-2">
+                    <a class="btn1 btn-dark" href="{% url 'datos' %}" role="button">Editar perfil</a>
+                </div>
+                <div class="text mt-3"> 
+                    <span><strong>Dirección:</strong> {{ usuario.address }}</span><br>
+                    <span><strong>Telefon:</strong> {{ usuario.phone }}</span><br>
+                    <span><strong>Fecha de nacimiento:</strong>{{ usuario.birthday }}</span><br>
+                    <span><strong>email:</strong> {{ usuario.email }}</span><br>
+                </div>
+                
             </div>
         </div>
-        <!-- Fin Perfil -->
     </div>
-    
+<!-- ======= fin Perfil ======= -->
+       
 {% endblock %}

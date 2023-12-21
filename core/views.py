@@ -69,14 +69,16 @@ class PerfilUsuario(DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         usuario = self.get_object()
-
+        
         # Filtrar registros por el usuario y por movimiento de tipo Ingreso
         ingresos = Registros.objects.filter(user=usuario, movimiento__tipo_movimiento='Ingresos')
-
+        #Fecha registro
+        fecha = usuario.date_joined
         # Calcular la suma del monto para los ingresos
         monto_total_ingresos = ingresos.aggregate(Sum('monto'))['monto__sum']
 
         context['monto_total_ingresos'] = monto_total_ingresos
+        context['fecha'] = fecha
         return context
 
 @method_decorator(login_required, name='dispatch')
