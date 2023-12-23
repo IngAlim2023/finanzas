@@ -69,4 +69,5 @@ window.addEventListener("load", async () => {
     await initChart("chart", "/get_chart/");
     await initChart("chartdos", "/get_chart_dos/");
     await initChart('charttres', "/get_chart_tres/");
+    await initChart('chartcuatro', "/get_chart_cuatro/");
 });

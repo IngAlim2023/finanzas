@@ -25,6 +25,9 @@ from django.views.generic.base import TemplateView
 from django.http.response import JsonResponse
 #Prueba grafico
 from datetime import datetime
+from django.db.models.functions import TruncMonth
+from django.db.models import Count
+
 
 
 class IndexPageView(TemplateView):
@@ -384,11 +387,7 @@ def get_chart_tres(request):
     porcentaje_disponible = int((monto_total_disponible / monto_total_ingresos) * 100)
 
     chart = {
-    'title': {
-        'text': 'Tus estadisticas',
-        'subtext': 'Egresos e Ingresos',
-        'left': 'center'
-    },
+    
     'tooltip': {
         'trigger': 'item',
     },
@@ -415,5 +414,124 @@ def get_chart_tres(request):
     }
 }
 
+
+    return JsonResponse(chart)
+
+
+@login_required
+def get_chart_cuatro(request):
+    # Encontrar al usuario
+    usuario = request.user
+    
+    # Obtener los datos agrupados por mes y sumar los montos para ingresos y egresos
+    datos_ingresos = (
+        Registros.objects
+        .filter(user=usuario, movimiento__tipo_movimiento='Ingresos')
+        .annotate(month=TruncMonth('fecha'))
+        .values('month')
+        .annotate(total_ingresos=Sum('monto'))
+        .order_by('month')
+    )
+
+    datos_egresos = (
+        Registros.objects
+        .filter(user=usuario, movimiento__tipo_movimiento='Egresos')
+        .annotate(month=TruncMonth('fecha'))
+        .values('month')
+        .annotate(total_egresos=Sum('monto'))
+        .order_by('month')
+    )
+
+    # Crear listas para almacenar datos
+    meses = []
+    ingresos = []
+    egresos = []
+    
+
+    # Procesar los datos de ingresos
+    for entry in datos_ingresos:
+        meses.append(entry['month'].strftime('%B %Y'))
+        ingresos.append(float(entry['total_ingresos']))
+
+    # Procesar los datos de egresos y calcular el saldo neto
+    for entry in datos_egresos:
+        egresos.append(float(entry['total_egresos']))
+
+    
+
+    # Crear el diccionario de datos para el gráfico
+    chart = {
+        'tooltip': {
+            'trigger': 'axis',
+            'axisPointer': {
+                'type': 'cross',
+                'label': {
+                    'backgroundColor': '#6a7985'
+                }
+            }
+        },
+        'legend': {
+            'data': ['Egresos', 'Ingresos']
+        },
+        'toolbox': {
+            'feature': {
+                'saveAsImage': {}
+            }
+        },
+        'grid': {
+            'left': '3%',
+            'right': '4%',
+            'bottom': '3%',
+            'containLabel': 'true'
+        },
+        'xAxis': [
+            {
+                'type': 'category',
+                'boundaryGap': 'false',
+                'data': meses
+            }
+        ],
+        'yAxis': [
+            {
+                'type': 'value',
+            }
+        ],
+        'series': [
+            {
+                'name': 'Ingresos',
+                'type': 'line',
+                'label':{
+                    'show':'true',
+                    'position':'top'
+                },
+                'areaStyle': {},
+                'emphasis': {
+                    'focus': 'series'
+                },
+                'itemStyle': {
+                    'color': '#73e238'  # Color rojo para egresos
+                },
+                'data': ingresos
+            },
+            {
+                'name': 'Egresos',
+                'type': 'line',
+                'label':{
+                    'show':'true',
+                    'position':'top'
+                },
+                'areaStyle': {},
+                'emphasis': {
+                    'focus': 'series'
+                },
+                'itemStyle': {
+                    'color': '#e36f6f'  # Color rojo para egresos
+                },
+                'data': egresos
+            }
+            
+        
+        ]
+    }
 
     return JsonResponse(chart)
