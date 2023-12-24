@@ -18,8 +18,8 @@ class Departamento(models.Model):
 
 class Ciudad(models.Model):
     departamento = models.ForeignKey(Departamento, on_delete=models.CASCADE)
-    nombre_ciudad = models.CharField('Ciudad', max_length=25)
-    codigo_ciudad = models.CharField('Código ciudad', max_length=2)
+    nombre_ciudad = models.CharField('Ciudad', max_length=48)
+    codigo_ciudad = models.CharField('Código ciudad', max_length=7)
     latitud = models.FloatField('Latitud', blank=True, null=True)
     longitud = models.FloatField('Longitud', blank=True, null=True)
     
